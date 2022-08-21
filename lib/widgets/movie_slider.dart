@@ -4,17 +4,27 @@ import '../models/models.dart';
 class MovieSlider extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
-  const MovieSlider({super.key, required this.movies, this.title});
+  final Function onNextPage;
+  const MovieSlider(
+      {super.key, required this.movies, this.title, required this.onNextPage});
 
   @override
   State<MovieSlider> createState() => _MovieSliderState();
 }
 
 class _MovieSliderState extends State<MovieSlider> {
+  final ScrollController scrollController = new ScrollController();
+
   @override
   void initState() {
     //Cuando un widget es stateFull el metodo init se ejecuta la primera vez que este widget es contruido
     super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 500) {
+        widget.onNextPage();
+      }
+    });
   }
 
   @override
@@ -28,7 +38,7 @@ class _MovieSliderState extends State<MovieSlider> {
     //componente que pinta las peliculas con el scrol horizontal
     return SizedBox(
       width: double.infinity,
-      height: 260,
+      height: 263,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,13 +47,16 @@ class _MovieSliderState extends State<MovieSlider> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 widget.title!,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis),
               ),
             ),
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
+                controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.movies.length,
                 itemBuilder: (_, int index) =>

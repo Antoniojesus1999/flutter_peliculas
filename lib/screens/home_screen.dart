@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
                 // componente slider horizontal
                 movies: moviesProvider.popularMovies,
                 title: 'Populares',
+                onNextPage: () => moviesProvider.getPopularMovies(),
               )
             ],
           ),
