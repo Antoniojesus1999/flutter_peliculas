@@ -14,7 +14,7 @@ class DetailsScreen extends StatelessWidget {
           _CustomAppBar(),
           SliverList(
               delegate: SliverChildListDelegate([
-            const _PosterAndTitle(),
+            _PosterAndTitle(),
             _Overview(),
             _Overview(),
             _Overview(),
@@ -48,7 +48,7 @@ class _CustomAppBar extends StatelessWidget {
             )),
         background: const FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/300x400'),
+          image: AssetImage('assets/loading.gif'),
           fit: BoxFit.cover,
         ),
       ),
@@ -57,14 +57,12 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitle extends StatelessWidget {
-  const _PosterAndTitle({super.key});
-
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           ClipRRect(
@@ -121,7 +119,7 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: const Text(
         'Pariatur tempor exercitation velit et ipsum culpa dolor in irure eu veniam. Nisi pariatur eiusmod adipisicing quis reprehenderit ex enim exercitation exercitation mollit ut minim ipsum. Laborum sit deserunt aliquip est non dolor. Labore et dolore eiusmod culpa cupidatat nostrud exercitation irure officia exercitation dolor aute enim.',
         textAlign: TextAlign.justify,

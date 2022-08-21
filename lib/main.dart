@@ -17,7 +17,7 @@ class AppState extends StatelessWidget {
           lazy: false,
         )
       ],
-      child: MyApp(),
+      child: const MyApp(),
     );
   }
 }
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Pelicula',
       initialRoute: 'home',
       routes: {
-        'home': (_) => HomeScreen(),
+        'home': (_) => const HomeScreen(),
         'details': (_) => const DetailsScreen(),
       },
       theme: ThemeData.light()
