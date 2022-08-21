@@ -48,7 +48,7 @@ class _CustomAppBar extends StatelessWidget {
             )),
         background: const FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: AssetImage('assets/loading.gif'),
+          image: NetworkImage('https://via.placeholder.com/300x400'),
           fit: BoxFit.cover,
         ),
       ),
