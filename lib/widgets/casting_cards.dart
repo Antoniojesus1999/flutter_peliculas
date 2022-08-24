@@ -1,11 +1,21 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:peliculas/provider/movies_provider.dart';
+import 'package:provider/provider.dart';
 
 class CastingCards extends StatelessWidget {
-  const CastingCards({super.key});
+  final int movieId;
+  const CastingCards({super.key, required this.movieId});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final moviesProvider = Provider.of<MoviesProvider>(context,listen: false);
+    return FutureBuilder(
+      future: moviesProvider.getMovieCast(movieId),
+      initialData: InitialData,
+      builder: (_ ,AsyncSnapshot<List<Cast>> snapshot)){
+        return Container(
       margin: const EdgeInsets.only(bottom: 30),
       width: double.infinity,
       height: 180,
@@ -14,6 +24,8 @@ class CastingCards extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, int index) => const _CastCard()),
     );
+    }
+
   }
 }
 
