@@ -40,16 +40,9 @@ class Movie {
     return 'https://i.stack.imgur.com/GNhx0.png';
   }
 
-  get fullPopulatImg {
-    if (posterPath != null) {
-      return 'https://image.tmdb.org/t/p/w500$posterPath';
-    }
-    return 'https://i.stack.imgur.com/GNhx0.png';
-  }
-
   get fullBackdropPath {
-    if (posterPath != null) {
-      return 'https://image.tmdb.org/t/p/w500$posterPath';
+    if (backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500$backdropPath';
     }
     return 'https://i.stack.imgur.com/GNhx0.png';
   }

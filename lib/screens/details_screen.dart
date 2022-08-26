@@ -29,6 +29,7 @@ class DetailsScreen extends StatelessWidget {
   }
 }
 
+//Componente cabecera modificada para que se vea mas grande pudiendo hacer scroll
 class _CustomAppBar extends StatelessWidget {
   final Movie movie;
 
