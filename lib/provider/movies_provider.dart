@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:peliculas/helper/debouncer.dart';
 import 'package:peliculas/models/models.dart';
 import 'package:peliculas/models/search_response.dart';
 
@@ -12,6 +15,13 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> popularMovies = [];
   Map<int, List<Cast>> moviesCast = {};
   int _popularPage = 0;
+
+  final debouncer = Debouncer(duration: Duration(milliseconds: 500));
+
+  final StreamController<List<Movie>> _suggestionStreamController =
+      new StreamController.broadcast();
+  Stream<List<Movie>> get suggestionStream =>
+      this._suggestionStreamController.stream;
 
   MoviesProvider() {
     getOnDsiplayMovies();
@@ -57,5 +67,24 @@ class MoviesProvider extends ChangeNotifier {
     final response = await http.get(url);
     final searchResponse = SearchResponse.fromJson(response.body);
     return searchResponse.results;
+  }
+
+  //Este metodo se ejecuta con caulquier movimiento en la barra de busqueda pero solo se hace petición
+  // al servidor despues de estar 300 millisegundos sin escribir nada
+
+  void getSuggestionsByQuery(String searchTerm) {
+    debouncer.value = '';
+    debouncer.onValue = (value) async {
+      //print('Tenemos valor a buscar: $value');
+
+      final result = await searchMovies(value);
+      _suggestionStreamController.add(result);
+    };
+    //cuando pasa 300 millisegundo asigna el valor a la clase debouncer copiada y salta el metodo onvalue que ejecuta la petición
+    final timer = Timer.periodic(Duration(milliseconds: 300), (_) {
+      debouncer.value = searchTerm;
+    });
+
+    Future.delayed(Duration(milliseconds: 301)).then((_) => timer.cancel());
   }
 }
